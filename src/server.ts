@@ -1,17 +1,12 @@
 import { Express } from 'express';
-import * as dotenv from 'dotenv';
 import * as http from 'http';
 import * as https from 'https';
 import * as fs from 'fs';
 import app from '@src/app';
 
-// Initialise les variables d'environnement
-dotenv.config({ path: './.env' });
-
 export default class Server {
     private port: any;
     private app: Express = app;
-    private options: ServerOptionsCert | null;
 
     private server:
         | https.Server<typeof http.IncomingMessage, typeof http.ServerResponse>
@@ -19,13 +14,6 @@ export default class Server {
 
     constructor() {
         this.port = this.normalizePort(process.env.PORT || '3000');
-
-        this.options = this.checkHttpsConfig
-            ? {
-                  key: fs.readFileSync('selfsigned.key'),
-                  cert: fs.readFileSync('selfsigned.crt'),
-              }
-            : null;
 
         this.setServer();
     }
@@ -51,6 +39,7 @@ export default class Server {
             typeof address === 'string'
                 ? 'pipe ' + address
                 : 'port: ' + this.port;
+
         switch (error.code) {
             case 'EACCES':
                 console.error(bind + ' requires elevated privileges.');
@@ -73,7 +62,13 @@ export default class Server {
         this.setAppExpress();
 
         this.server = this.checkHttpsConfig
-            ? https.createServer(this.options, this.app)
+            ? https.createServer(
+                  {
+                      key: fs.readFileSync('selfsigned.key'),
+                      cert: fs.readFileSync('selfsigned.crt'),
+                  },
+                  this.app
+              )
             : http.createServer(this.app);
 
         this.server.on('error', this.errorHandler);
@@ -98,18 +93,7 @@ export default class Server {
      */
     private checkHttpsConfig(): boolean {
         const value = process.env.PROTOCOL || 'HTTP';
-        switch (value.toUpperCase()) {
-            case 'HTTPS':
-                return true;
-            case 'HTTP':
-                return false;
-            default:
-                return false;
-        }
-    }
-}
 
-interface ServerOptionsCert {
-    key: Buffer;
-    cert: Buffer;
+        return value.toUpperCase() === 'HTTPS';
+    }
 }

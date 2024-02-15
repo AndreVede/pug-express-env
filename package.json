@@ -1,37 +1,43 @@
 {
-  "author": "Zacharie Boisnard",
-  "license": "ISC",
-  "name": "pug-express-env",
-  "packageManager": "yarn@4.0.2",
-  "description": "Pug environment",
-  "version": "1.0.0",
-  "devDependencies": {
-    "@prettier/plugin-pug": "^3.0.0",
-    "@types/express": "^4",
-    "@types/pug": "^2.0.7",
-    "@types/webpack-node-externals": "^3",
-    "autoprefixer": "^10.4.16",
-    "css-loader": "^6.8.1",
-    "file-loader": "^6.2.0",
-    "postcss-loader": "^7.3.3",
-    "prettier": "^3.0.3",
-    "pug": "^3.0.2",
-    "sass": "^1.68.0",
-    "sass-loader": "^13.3.2",
-    "style-loader": "^3.3.3",
-    "ts-loader": "^9.4.4",
-    "typescript": "^5.2.2",
-    "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1",
-    "webpack-nano": "^1.1.1",
-    "webpack-node-externals": "^3.0.0"
-  },
-  "dependencies": {
-    "dotenv": "^16.4.4",
-    "express": "^4.18.2",
-    "fs": "^0.0.1-security",
-    "http": "^0.0.1-security",
-    "https": "^1.0.0"
-  }
+    "author": "Zacharie Boisnard",
+    "license": "ISC",
+    "name": "pug-express-env",
+    "packageManager": "yarn@4.0.2",
+    "description": "Pug environment",
+    "scripts": {
+        "build": "webpack --config webpack.config.js --mode=production",
+        "serve": "webpack serve --config webpack.config.js --mode=development --progress",
+        "dev": "webpack --config webpack.config.js --mode=development --progress --watch"
+    },
+    "version": "1.0.0",
+    "devDependencies": {
+        "@prettier/plugin-pug": "^3.0.0",
+        "@types/express": "^4",
+        "@types/pug": "^2.0.7",
+        "@types/webpack-node-externals": "^3",
+        "autoprefixer": "^10.4.16",
+        "css-loader": "^6.8.1",
+        "dotenv-webpack": "^8.0.1",
+        "file-loader": "^6.2.0",
+        "postcss-loader": "^7.3.3",
+        "prettier": "^3.0.3",
+        "pug": "^3.0.2",
+        "sass": "^1.68.0",
+        "sass-loader": "^13.3.2",
+        "style-loader": "^3.3.3",
+        "ts-loader": "^9.4.4",
+        "typescript": "^5.2.2",
+        "webpack": "^5.88.2",
+        "webpack-cli": "^5.1.4",
+        "webpack-dev-server": "^4.15.1",
+        "webpack-nano": "^1.1.1",
+        "webpack-node-externals": "^3.0.0"
+    },
+    "dependencies": {
+        "dotenv": "^16.4.4",
+        "express": "^4.18.2",
+        "fs": "^0.0.1-security",
+        "http": "^0.0.1-security",
+        "https": "^1.0.0"
+    }
 }
